@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require("sequelize");
 const connection = require("./connection");
 const bcrypt = require("bcryptjs");
-class ADMIN extends Model {}
+class Admin extends Model {}
 
-ADMIN.init(
+Admin.init(
   {
     lastname: DataTypes.STRING,
     firstname: DataTypes.STRING,
@@ -37,13 +37,13 @@ ADMIN.init(
   }
 );
 
-ADMIN.addHook("beforeCreate", async (ADMIN) => {
-  ADMIN.password = await bcrypt.hash(ADMIN.password, await bcrypt.genSalt());
+Admin.addHook("beforeCreate", async (Admin) => {
+  Admin.password = await bcrypt.hash(Admin.password, await bcrypt.genSalt());
 });
-ADMIN.addHook("beforeUpdate", async (ADMIN, { fields }) => {
+Admin.addHook("beforeUpdate", async (Admin, { fields }) => {
   if (fields.includes("password")) {
-    ADMIN.password = await bcrypt.hash(ADMIN.password, await bcrypt.genSalt());
+    Admin.password = await bcrypt.hash(Admin.password, await bcrypt.genSalt());
   }
 });
 
-module.exports = ADMIN;
+module.exports = Admin;
