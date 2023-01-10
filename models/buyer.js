@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require("sequelize");
 const connection = require("./connection");
 const bcrypt = require("bcryptjs");
-class Buyer extends Model {}
+class Visitor extends Model {}
 
-Buyer.init(
+visitor.init(
   {
     lastname: DataTypes.STRING,
     firstname: DataTypes.STRING,
@@ -37,12 +37,12 @@ Buyer.init(
   }
 );
 
-Buyer.addHook("beforeCreate", async (Buyer) => {
-  Buyer.password = await bcrypt.hash(Buyer.password, await bcrypt.genSalt());
+Visitor.addHook("beforeCreate", async (Visitor) => {
+  Visitor.password = await bcrypt.hash(Visitor.password, await bcrypt.genSalt());
 });
-Buyer.addHook("beforeUpdate", async (Buyer, { fields }) => {
+Visitor.addHook("beforeUpdate", async (Visitor, { fields }) => {
   if (fields.includes("password")) {
-    Buyer.password = await bcrypt.hash(Buyer.password, await bcrypt.genSalt());
+    Visitor.password = await bcrypt.hash(Visitor.password, await bcrypt.genSalt());
   }
 });
 
